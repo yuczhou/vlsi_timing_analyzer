@@ -1,0 +1,13 @@
+start 63  end 64  buffertype 2 
+start 68  end 69  buffertype 4 
+start 76  end 77  buffertype 4 
+start 3  end 14  buffertype 6 
+start 50  end 51  buffertype 2 
+start 56  end 1  buffertype 2 
+start 90  end 91  buffertype 4 
+start 95  end 96  buffertype 6 
+start 102  end 2  buffertype 6 
+start 110  end 111  buffertype 2 
+start 114  end 115  buffertype 2 
+start 118  end 10  buffertype 6 
+start 125  end 126  buffertype 2 
