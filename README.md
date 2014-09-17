@@ -7,11 +7,11 @@ This tool is only tested on a 32-bit Ubuntu (14.04) machine.
 
 How to use this tool? Go to the root directory and run this.
 ```bash
-python main.py <buffering solution file> <buffer library file> <net file>
+python main.py <buffering solution file> <buffer library file> <net file> <unit rc file>
 ```
 
 Example:
 
 ```bash
-python main.py buffersolution_net0.txt library.cobalt 0.net
+python main.py buffersolution_net0.txt library.cobalt 0.net cnt_res_cap_5000.txt
 ```

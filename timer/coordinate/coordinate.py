@@ -2,6 +2,8 @@ __author__ = 'yuczhou'
 
 
 class Coordinate(object):
+
+    scale = 1 / 5000.0
     
     def __init__(self, coord):
         self._coord = coord if hasattr(coord, "__iter__") else coord.coord
@@ -20,4 +22,4 @@ class Coordinate(object):
         return not self.__eq__(other)
 
     def distance(self, coordinate):
-        return abs(len(self) - len(coordinate))
+        return abs(len(self) - len(coordinate)) * Coordinate.scale

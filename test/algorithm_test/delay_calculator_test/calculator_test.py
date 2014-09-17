@@ -19,7 +19,9 @@ class CalculatorTest(unittest.TestCase):
         self._root_node[1] = Node(Coordinate([1, 5]))
         self._root_node[2] = Node(Coordinate([1, 6]))
 
-        self._unit_rc = ElectroProperty([10, 10])
+        self._unit_rc = ElectroProperty([10 / Coordinate.scale, 10 / Coordinate.scale])
+
+        self._delta = 0.0001
 
     def test_capacitor_gate(self):
         calculator = DelayCalculator(Gate(Coordinate([1, 1]), ElectroProperty([2, 2])), [2, 3], self._unit_rc)
@@ -35,7 +37,7 @@ class CalculatorTest(unittest.TestCase):
 
     def test_delay_node(self):
         calculator = DelayCalculator(self._root_node, [2, 3], self._unit_rc)
-        self.assertEqual(calculator.worst_delay(), max(50 * 27, 60 * 33))
+        self.assertAlmostEqual(calculator.worst_delay(), max(50 * 27, 60 * 33), delta=self._delta)
 
 
 if __name__ == '__main__':

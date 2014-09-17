@@ -10,7 +10,6 @@ import unittest
 
 
 class DFSTest(unittest.TestCase):
-
     def setUp(self):
         self._root_gate = Gate(Coordinate([1, 0]), ElectroProperty([4, 0]))
         self._root_gate[1] = Node(Coordinate([1, 5]))
@@ -21,7 +20,7 @@ class DFSTest(unittest.TestCase):
         self._root_node[1] = Node(Coordinate([1, 5]))
         self._root_node[2] = Node(Coordinate([1, 6]))
 
-        self._unit_rc = ElectroProperty([1, 1])
+        self._unit_rc = ElectroProperty([1 / Coordinate.scale, 1 / Coordinate.scale])
 
     def test_root_gate(self):
         self.assertEqual(DFS(self._root_gate, self._unit_rc).delay()[0], 176.5 + 96)

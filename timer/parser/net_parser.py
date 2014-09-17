@@ -25,7 +25,7 @@ class NetParser(Parser):
         self._unit_electro_property = ElectroProperty(
             [self._parse_unit_rc(is_valid_wire_unit_res), self._parse_unit_rc(is_valid_wire_unit_cap)])
         map(self.create_edge, filter(is_edge, self.lines()))
-        return self.nodes, self.unit_electro_property
+        return self.nodes
 
     def _parse_unit_rc(self, filter_func):
         return float(self.split(filter(filter_func, self.lines())[0])[1])

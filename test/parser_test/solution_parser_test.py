@@ -1,4 +1,4 @@
-from timer.parser.SolutionParser import SolutionParser
+from timer.parser.solution_parser import SolutionParser
 from timer.parser.buffer_library_parser import BufferLibraryParser
 from timer.parser.net_parser import NetParser
 
@@ -10,7 +10,7 @@ import unittest
 class SolutionParserTest(unittest.TestCase):
     def setUp(self):
         self._parser = SolutionParser('buffersolution_net0.txt', BufferLibraryParser('library.cobalt').parse(),
-                                      NetParser('0.net').parse()[0])
+                                      NetParser('0.net').parse())
 
     def test_buffer(self):
         org_neighbors = self._neighbors(63)

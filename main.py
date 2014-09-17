@@ -1,20 +1,21 @@
 import sys
 from timer.algorithm.dfs import DFS
-from timer.parser.SolutionParser import SolutionParser
+from timer.parser.solution_parser import SolutionParser
 from timer.parser.buffer_library_parser import BufferLibraryParser
 from timer.parser.net_parser import NetParser
+from timer.parser.wire_rc_parser import WireRCParser
 
 __author__ = 'yuczhou'
 
 
-def parse_tree_info(files):
-    nodes, unit_rc = NetParser(files[2]).parse()
-    return SolutionParser(files[0], BufferLibraryParser(files[1]).parse(), nodes).parse(), unit_rc
+def parse(files):
+    return SolutionParser(files[0], BufferLibraryParser(files[1]).parse(),
+                          NetParser(files[2]).parse()).parse(), WireRCParser(files[3]).parse()
 
 
 def main(argv):
-    delay, _ = DFS(*parse_tree_info(argv)).delay()
-    print delay
+    root, unit_rc_list = parse(argv)
+    print [DFS(root, unit_rc).delay()[0] for unit_rc in unit_rc_list]
 
 
 if __name__ == '__main__':
