@@ -1,5 +1,7 @@
+import os
 import sys
 from timer.algorithm.dfs import DFS
+from timer.dumper.dumper import Dumper
 from timer.parser.solution_parser import SolutionParser
 from timer.parser.buffer_library_parser import BufferLibraryParser
 from timer.parser.net_parser import NetParser
@@ -15,7 +17,8 @@ def parse(files):
 
 def main(argv):
     root, unit_rc_list = parse(argv)
-    print [DFS(root, unit_rc).delay()[0] for unit_rc in unit_rc_list]
+    Dumper([DFS(root, unit_rc).delay()[0] for unit_rc in unit_rc_list], os.path.abspath('delay.txt')).dump()
+    print 'Worst case calculation succeed! Refer to \'delay.txt\' in current directory!'
 
 
 if __name__ == '__main__':
