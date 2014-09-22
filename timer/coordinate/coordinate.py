@@ -22,4 +22,4 @@ class Coordinate(object):
         return not self.__eq__(other)
 
     def distance(self, coordinate):
-        return abs(len(self) - len(coordinate)) * Coordinate.scale
+        return abs(sum([abs(c1 - c2) for c1, c2 in zip(self.coord, coordinate.coord)])) * Coordinate.scale
