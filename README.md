@@ -7,14 +7,14 @@ This tool is only tested on a 32-bit Ubuntu (14.04) machine.
 
 How to use this tool?
 
-Go to the root directory and run this. A delay.txt file would be generated. It contains the worst case delay corresponding to each unit wire resistance/capacitance setting.
+Go to the root directory and run this. A delay file with user defined name would be generated. It contains the worst case delay corresponding to each unit wire resistance/capacitance setting.
 
 ```bash
-python main.py <buffering solution file> <buffer library file> <net file> <unit rc file>
+python main.py <buffering solution file> <buffer library file> <net file> <unit rc file> <output delay file>
 ```
 
 Example:
 
 ```bash
-python main.py buffersolution_net0.txt library.cobalt 0.net cnt_res_cap_5000.txt
+python main.py buffersolution_net0.txt library.cobalt 0.net cnt_res_cap_5000.txt delay.txt
 ```
