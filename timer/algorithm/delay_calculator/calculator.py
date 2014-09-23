@@ -22,8 +22,8 @@ class DelayCalculator(object):
         return self._unit_rc * self.root.distance_from(child)
 
     def worst_delay(self):
-        return max([self._single_delay(downstream_capacitor, wire_rc) for downstream_capacitor, wire_rc in
-                    zip(self.downstream_capacitor_list, self._wire_rc())])
+        return [self._single_delay(downstream_capacitor, wire_rc) for downstream_capacitor, wire_rc in
+                    zip(self.downstream_capacitor_list, self._wire_rc())]
 
     def _single_delay(self, downstream_capacitor, wire_rc):
         return self.root.electro_property.r * (wire_rc.c + downstream_capacitor) + wire_rc.r * (

@@ -19,4 +19,5 @@ class DFS(Algorithm):
             return 0, root.electro_property.c
         worst_delay_list, capacitor_list = zip(*[self._delay(child) for child in root.neighbors()])
         delay_calculator = DelayCalculator(root, capacitor_list, self.electro_property)
-        return max(worst_delay_list) + delay_calculator.worst_delay(), delay_calculator.capacitance()
+        return max([downstream + wire for downstream, wire in
+                    zip(worst_delay_list, delay_calculator.worst_delay())]), delay_calculator.capacitance()

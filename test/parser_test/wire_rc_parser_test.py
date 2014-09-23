@@ -1,3 +1,4 @@
+from timer.parser.line_parser.unit_rc_parser import UnitRCParser
 from timer.parser.wire_rc_parser import WireRCParser
 from timer.vlsi.electro_property import ElectroProperty
 
@@ -11,7 +12,8 @@ class WireRCParserTest(unittest.TestCase):
         self.assertEqual(len(WireRCParser('cnt_res_cap_5000.txt').parse()), 5000)
 
     def test_content(self):
-        self.assertIn(ElectroProperty([0.006499, 0.142514]), WireRCParser('cnt_res_cap_5000.txt').parse())
+        self.assertIn(ElectroProperty(map(lambda _: _ * UnitRCParser._scaling, [0.006499, 0.142514])),
+                      WireRCParser('cnt_res_cap_5000.txt').parse())
 
 
 if __name__ == '__main__':

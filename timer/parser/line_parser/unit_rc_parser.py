@@ -6,8 +6,10 @@ __author__ = 'yuczhou'
 
 class UnitRCParser(LineParser):
 
+    _scaling = 1.1
+
     def __init__(self, line):
         LineParser.__init__(self, line)
 
     def parse(self):
-        return ElectroProperty(map(lambda _: float(_), self.line))
+        return ElectroProperty(map(lambda _: float(_) * UnitRCParser._scaling, self.line))

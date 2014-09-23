@@ -33,11 +33,11 @@ class CalculatorTest(unittest.TestCase):
 
     def test_delay_gate(self):
         calculator = DelayCalculator(self._root_gate, [2, 3], self._unit_rc)
-        self.assertEqual(calculator.worst_delay(), max(4 * (40 + 2) + 40 * (20 + 2), 4 * 53 + 50 * 28))
+        self.assertEqual(calculator.worst_delay(), [4 * (40 + 2) + 40 * (20 + 2), 4 * 53 + 50 * 28])
 
     def test_delay_node(self):
         calculator = DelayCalculator(self._root_node, [2, 3], self._unit_rc)
-        self.assertAlmostEqual(calculator.worst_delay(), max(50 * 27, 60 * 33), delta=self._delta)
+        self.assertAlmostEqual(max(calculator.worst_delay()), max(50 * 27, 60 * 33), delta=self._delta)
 
 
 if __name__ == '__main__':
