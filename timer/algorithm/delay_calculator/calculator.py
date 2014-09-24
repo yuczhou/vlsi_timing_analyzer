@@ -23,11 +23,11 @@ class DelayCalculator(object):
 
     def worst_delay(self):
         return [self._single_delay(downstream_capacitor, wire_rc) for downstream_capacitor, wire_rc in
-                    zip(self.downstream_capacitor_list, self._wire_rc())]
+                zip(self.downstream_capacitor_list, self._wire_rc())]
 
     def _single_delay(self, downstream_capacitor, wire_rc):
-        return self.root.electro_property.r * (wire_rc.c + downstream_capacitor) + wire_rc.r * (
-            wire_rc.c / 2.0 + downstream_capacitor)
+        return self.root.intrinsic_delay() + self.root.electro_property.r * (
+            wire_rc.c + downstream_capacitor) + wire_rc.r * (wire_rc.c / 2.0 + downstream_capacitor)
 
     def capacitance(self):
         return self.root.get_capacitor(self._capacitance_list)

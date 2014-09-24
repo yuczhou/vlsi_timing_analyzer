@@ -1,6 +1,6 @@
 import re
 from timer.parser.parser import Parser
-from timer.vlsi.electro_property import ElectroProperty
+from timer.vlsi.buffer_property import BufferProperty
 
 __author__ = 'yuczhou'
 
@@ -15,8 +15,9 @@ class BufferLibraryParser(Parser):
         return self._buffer_list
 
     def parse(self):
-        self._buffer_list = [ElectroProperty([r, c]) for r, c in
-                             zip(self._extract_info(self.is_resistance), self._extract_info(self.is_input_capacitance))]
+        self._buffer_list = [BufferProperty([r, c], intrinsic_delay) for r, c, intrinsic_delay in
+                             zip(self._extract_info(self.is_resistance), self._extract_info(self.is_input_capacitance),
+                                 self._extract_info(self.is_intrinsic_delay))]
         return self.buffer_list
 
     def _extract_info(self, filter_func):
@@ -27,3 +28,6 @@ class BufferLibraryParser(Parser):
 
     def is_resistance(self, line):
         return bool(re.compile(r'^resistance.*$').match(line))
+
+    def is_intrinsic_delay(self, line):
+        return bool(re.compile(r'^intrinsicDelay.*$').match(line))

@@ -1,5 +1,5 @@
 from timer.parser.buffer_library_parser import BufferLibraryParser
-from timer.vlsi.electro_property import ElectroProperty
+from timer.vlsi.buffer_property import BufferProperty
 
 __author__ = 'yuczhou'
 
@@ -10,8 +10,8 @@ class BufferLibraryParserTest(unittest.TestCase):
     def test_parse_lib(self):
         library = BufferLibraryParser('library.cobalt').parse()
         self.assertEqual(len(library), 10)
-        self.assertEqual(library[0], ElectroProperty([1.85, 0.436]))
-        self.assertEqual(library[9], ElectroProperty([0.159, 3.5]))
+        self.assertEqual(library[0], BufferProperty([1.85, 0.436], 0.59))
+        self.assertEqual(library[9], BufferProperty([0.159, 3.5], 2.87))
 
 
 if __name__ == '__main__':

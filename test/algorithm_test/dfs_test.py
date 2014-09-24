@@ -1,8 +1,10 @@
 from timer.algorithm.dfs import DFS
 from timer.coordinate.coordinate import Coordinate
+from timer.node.buffer import Buffer
 from timer.node.gate import Gate
 from timer.node.node import Node
 from timer.parser.line_parser.unit_rc_parser import UnitRCParser
+from timer.vlsi.buffer_property import BufferProperty
 from timer.vlsi.electro_property import ElectroProperty
 
 __author__ = 'yuczhou'
@@ -32,7 +34,7 @@ class DFSTest(unittest.TestCase):
 
     def test_simple_one_buffer(self):
         root = Gate(Coordinate([0, 0]), ElectroProperty([10, 0]))
-        root[1] = Gate(Coordinate([0, 0]), ElectroProperty([10, 10]))
+        root[1] = Buffer(Coordinate([0, 0]), BufferProperty([10, 10], 0))
         root[1][1] = Gate(Coordinate([10, 0]), ElectroProperty([0, 5]))
 
         unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)

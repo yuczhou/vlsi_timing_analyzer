@@ -6,7 +6,7 @@ __author__ = 'yuczhou'
 
 class UnitRCParser(LineParser):
 
-    _scaling = 1.1
+    _scaling = 1.0
 
     def __init__(self, line):
         LineParser.__init__(self, line)

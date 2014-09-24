@@ -1,5 +1,5 @@
 import re
-from timer.node.gate import Gate
+from timer.node.buffer import Buffer
 from timer.parser.line_parser.buffer_solution import SolutionLineParser
 from timer.parser.parser import Parser
 
@@ -19,7 +19,7 @@ class SolutionParser(Parser):
 
     def add_buffer(self, line):
         start, end, buffer_type = SolutionLineParser(line).parse()
-        new_buffer = Gate(self.nodes[start].coord, self._buffer_library[buffer_type])
+        new_buffer = Buffer(self.nodes[start].coord, self._buffer_library[buffer_type])
         new_buffer[end] = self.nodes[end]
         self.nodes[start][id(new_buffer)] = new_buffer
         del self.nodes[start][end]

@@ -36,3 +36,6 @@ class Node(dict):
 
     def get_capacitor(self, downstream_capacitors):
         return sum(downstream_capacitors)
+
+    def intrinsic_delay(self):
+        return 0
