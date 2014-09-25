@@ -10,4 +10,4 @@ class Buffer(Gate):
         Gate.__init__(self, coord, electro_property)
 
     def intrinsic_delay(self):
-        return self.electro_property.intrinsic_delay()
+        return self.electro_property.intrinsic_delay

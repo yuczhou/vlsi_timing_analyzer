@@ -1,5 +1,6 @@
 from timer.algorithm.algorithm import Algorithm
-from timer.algorithm.delay_calculator.calculator import DelayCalculator
+from timer.algorithm.delay_calculator.capacitance_calculator import CapacitanceCalculator
+from timer.algorithm.delay_calculator.delay_calculator import DelayCalculator
 from timer.node.node import Node
 
 __author__ = 'yuczhou'
@@ -17,7 +18,6 @@ class DFS(Algorithm):
             raise TypeError('invalid type: Node expected')
         if not root:
             return 0, root.electro_property.c
-        worst_delay_list, capacitor_list = zip(*[self._delay(child) for child in root.neighbors()])
-        delay_calculator = DelayCalculator(root, capacitor_list, self.electro_property)
-        return max([downstream + wire for downstream, wire in
-                    zip(worst_delay_list, delay_calculator.worst_delay())]), delay_calculator.capacitance()
+        downstream_delay_list, downstream_capacitance_list = zip(*[self._delay(child) for child in root.neighbors()])
+        return DelayCalculator(root, downstream_delay_list, downstream_capacitance_list, self.unit_rc).calculate(),\
+               CapacitanceCalculator(root, downstream_capacitance_list, self.unit_rc).calculate()

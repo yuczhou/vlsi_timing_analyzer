@@ -1,4 +1,5 @@
-from timer.algorithm.delay_calculator.calculator import DelayCalculator
+from timer.algorithm.delay_calculator.capacitance_calculator import CapacitanceCalculator
+from timer.algorithm.delay_calculator.delay_calculator import DelayCalculator
 from timer.coordinate.coordinate import Coordinate
 from timer.node.gate import Gate
 from timer.node.node import Node
@@ -19,25 +20,23 @@ class CalculatorTest(unittest.TestCase):
         self._root_node[1] = Node(Coordinate([1, 5]))
         self._root_node[2] = Node(Coordinate([1, 6]))
 
-        self._unit_rc = ElectroProperty([10 / Coordinate.scale, 10 / Coordinate.scale])
-
-        self._delta = 0.0001
+        self._unit_rc = ElectroProperty([1 / Coordinate.scale, 1 / Coordinate.scale])
 
     def test_capacitor_gate(self):
-        calculator = DelayCalculator(Gate(Coordinate([1, 1]), ElectroProperty([2, 2])), [2, 3], self._unit_rc)
-        self.assertEqual(calculator.capacitance(), 2)
+        calculator = CapacitanceCalculator(Gate(Coordinate([1, 1]), ElectroProperty([2, 2])), [2, 3], self._unit_rc)
+        self.assertEqual(calculator.calculate(), 2)
 
     def test_capacitor_node(self):
-        calculator = DelayCalculator(self._root_node, [2, 3], self._unit_rc)
-        self.assertEqual(calculator.capacitance(), 2 + 3 + 10 * 5 + 10 * 6)
+        calculator = CapacitanceCalculator(self._root_node, [2, 3], self._unit_rc)
+        self.assertEqual(calculator.calculate(), 2 + 3 + 1 * 5 + 1 * 6)
 
     def test_delay_gate(self):
-        calculator = DelayCalculator(self._root_gate, [2, 3], self._unit_rc)
-        self.assertEqual(calculator.worst_delay(), [4 * (40 + 2) + 40 * (20 + 2), 4 * 53 + 50 * 28])
+        calculator = DelayCalculator(self._root_gate, [0, 0], [2, 3], self._unit_rc)
+        self.assertEqual(calculator.calculate(), 4 * (4 + 5 + 2 + 3) + 5 * (5 / 2.0 + 3))
 
     def test_delay_node(self):
-        calculator = DelayCalculator(self._root_node, [2, 3], self._unit_rc)
-        self.assertAlmostEqual(max(calculator.worst_delay()), max(50 * 27, 60 * 33), delta=self._delta)
+        calculator = DelayCalculator(self._root_node, [0, 0], [2, 3], self._unit_rc)
+        self.assertAlmostEqual(calculator.calculate(), 36)
 
 
 if __name__ == '__main__':

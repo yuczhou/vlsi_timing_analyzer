@@ -18,7 +18,7 @@ class ElectroProperty(object):
         return self.r == other.r and self.c == other.c
 
     def __ne__(self, other):
-        return self != other
+        return not self == other
 
     def __mul__(self, wire_length):
         return ElectroProperty([self.r * wire_length, self.c * wire_length])

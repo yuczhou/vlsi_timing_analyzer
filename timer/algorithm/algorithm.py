@@ -7,17 +7,17 @@ class Algorithm(object):
 
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, root, rc):
+    def __init__(self, root, unit_rc):
         self._root = root
-        self._electro_property = rc
+        self._unit_rc = unit_rc
 
     @property
     def root(self):
         return self._root
 
     @property
-    def electro_property(self):
-        return self._electro_property
+    def unit_rc(self):
+        return self._unit_rc
 
     @abc.abstractmethod
     def delay(self):

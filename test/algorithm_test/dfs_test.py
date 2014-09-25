@@ -22,7 +22,7 @@ class DFSTest(unittest.TestCase):
         self._unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
 
     def test_no_buffer(self):
-        self.assertEqual(DFS(self._root_gate, self._unit_rc).delay()[0], 176.5 + 96)
+        self.assertEqual(DFS(self._root_gate, self._unit_rc).delay()[0], 324.5)
 
     def test_simple_no_buffer(self):
         root = Gate(Coordinate([0, 0]), ElectroProperty([10, 0]))
@@ -65,6 +65,32 @@ class DFSTest(unittest.TestCase):
         unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
 
         self.assertEqual(DFS(root, unit_rc).delay()[0], 3250)
+
+    def test_binary_tree(self):
+        driver_0 = Gate(Coordinate([0, 0]), ElectroProperty([1, 0]))
+        buffer_1 = Gate(Coordinate([6, 0]), ElectroProperty([2, 2]))
+        node_2 = Node(Coordinate([6, 0]))
+        buffer_3 = Gate(Coordinate([6, 0]), ElectroProperty([5, 5]))
+        sink_4 = Gate(Coordinate([26, 0]), ElectroProperty([0, 10]))
+        sink_5 = Gate(Coordinate([16, 0]), ElectroProperty([0, 10]))
+        node_6 = Node(Coordinate([0, 10]))
+        sink_7 = Gate(Coordinate([0, 20]), ElectroProperty([0, 5]))
+        buffer_8 = Gate(Coordinate([0, 10]), ElectroProperty([4, 4]))
+        sink_9 = Gate(Coordinate([0, 16]), ElectroProperty([0, 10]))
+
+        driver_0[1] = buffer_1
+        buffer_1[2] = node_2
+        node_2[3] = buffer_3
+        buffer_3[4] = sink_4
+        node_2[5] = sink_5
+        driver_0[6] = node_6
+        node_6[7] = sink_7
+        node_6[8] = buffer_8
+        buffer_8[9] = sink_9
+
+        unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
+
+        self.assertEqual(DFS(driver_0, unit_rc).delay()[0], 667)
 
 
 if __name__ == '__main__':
