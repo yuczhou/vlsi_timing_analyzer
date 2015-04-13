@@ -25,4 +25,4 @@ class Coordinate(object):
         return str(self.coord)
 
     def distance(self, coordinate):
-        return abs(sum([abs(c1 - c2) for c1, c2 in zip(self.coord, coordinate.coord)])) * Coordinate.scale
+        return [abs(c1 - c2) * Coordinate.scale for c1, c2 in zip(self.coord, coordinate.coord)]

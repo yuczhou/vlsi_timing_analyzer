@@ -30,14 +30,15 @@ class Calculator(object):
                 zip(self.downstream_capacitance_list, map(lambda _: _.c, self._wire_rc()))]
 
     def _wire_rc(self):
-        return [self._unit_rc * self.root.distance_from(child) * self._wire_rc_adjustment(child) for child in
+        return [self._unit_rc * self._wire_rc_adjustment(child) for child in
                 self.root.neighbors()]
 
     def _wire_rc_adjustment(self, child):
         if settings.TEST_MODE:
             return 1
-        return (child.coord.coord[1] * self._wire_rc_changer.get_adjustment(child.coord, CoordSelector.RIGHT) +
-                self.root.coord.coord[0] * self._wire_rc_changer.get_adjustment(self.root.coord, CoordSelector.LEFT))
+        return sum([random_adjust * actual_length for random_adjust, actual_length in zip(
+            [self._wire_rc_changer.get_adjustment(self.root.coord, CoordSelector.LEFT),
+             self._wire_rc_changer.get_adjustment(child.coord, CoordSelector.RIGHT)], self.root.distance_from(child))])
 
     @abc.abstractmethod
     def calculate(self):
