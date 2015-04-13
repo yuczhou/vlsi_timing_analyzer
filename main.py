@@ -1,5 +1,6 @@
 import os
 import sys
+from timer.algorithm.delay_calculator.rc_adjustment import RCAdjustment
 from timer.algorithm.dfs import DFS
 from timer.dumper.dumper import Dumper
 from timer.parser.solution_parser import SolutionParser
@@ -17,8 +18,11 @@ def parse(files):
 
 def main(argv):
     root, unit_rc_list = parse(argv)
-    Dumper([DFS(root, unit_rc).delay()[0] for unit_rc in unit_rc_list], os.path.abspath(argv[4])).dump()
-    print 'Worst case calculation succeed! Refer to \'%s\' in current directory!' % argv[4]
+    rc_adjustment = RCAdjustment()
+    Dumper([DFS(root, unit_rc, rc_adjustment).delay()[0] for unit_rc in unit_rc_list], os.path.abspath(argv[4])).dump()
+    Dumper(rc_adjustment, os.path.abspath(argv[5])).dump()
+    print 'Worst case calculation succeed! Refer to \'%s\' in current directory!\n' % argv[4]
+    print 'Random numbers corresponding to coordinates are saved in \'%s\' in current directory!\n' % argv[5]
 
 
 if __name__ == '__main__':

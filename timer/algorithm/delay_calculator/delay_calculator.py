@@ -4,8 +4,8 @@ __author__ = 'yuczhou'
 
 
 class DelayCalculator(Calculator):
-    def __init__(self, root, down_stream_delay_list, downstream_capacitor_list, unit_rc):
-        Calculator.__init__(self, root, downstream_capacitor_list, unit_rc)
+    def __init__(self, root, down_stream_delay_list, downstream_capacitor_list, unit_rc, wire_rc_changer):
+        Calculator.__init__(self, root, downstream_capacitor_list, unit_rc, wire_rc_changer)
         self._downstream_delay_list = down_stream_delay_list
 
     def _current_delay_list(self):

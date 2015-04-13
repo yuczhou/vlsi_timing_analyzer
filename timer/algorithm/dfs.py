@@ -7,8 +7,8 @@ __author__ = 'yuczhou'
 
 
 class DFS(Algorithm):
-    def __init__(self, root, unit_electro_property):
-        Algorithm.__init__(self, root, unit_electro_property)
+    def __init__(self, root, unit_electro_property, rc_adjustment):
+        Algorithm.__init__(self, root, unit_electro_property, rc_adjustment)
 
     def delay(self):
         return self._delay(self.root)
@@ -18,6 +18,8 @@ class DFS(Algorithm):
             raise TypeError('invalid type: Node expected')
         if not root:
             return 0, root.electro_property.c
-        downstream_delay_list, downstream_capacitance_list = zip(*[self._delay(child) for child in root.neighbors()])
-        return DelayCalculator(root, downstream_delay_list, downstream_capacitance_list, self.unit_rc).calculate(),\
-               CapacitanceCalculator(root, downstream_capacitance_list, self.unit_rc).calculate()
+        downstream_delays, downstream_caps = zip(*[self._delay(child) for child in root.neighbors()])
+
+        delay_cal = DelayCalculator(root, downstream_delays, downstream_caps, self.unit_rc, self.wire_rc_adjustment)
+        cap_cal = CapacitanceCalculator(root, downstream_caps, self.unit_rc, self.wire_rc_adjustment)
+        return delay_cal.calculate(), cap_cal.calculate()

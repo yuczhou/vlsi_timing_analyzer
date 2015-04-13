@@ -4,8 +4,8 @@ __author__ = 'yuczhou'
 
 
 class CapacitanceCalculator(Calculator):
-    def __init__(self, root, downstream_capacitor_list, unit_rc):
-        Calculator.__init__(self, root, downstream_capacitor_list, unit_rc)
+    def __init__(self, root, downstream_capacitor_list, unit_rc, wire_rc_changer):
+        Calculator.__init__(self, root, downstream_capacitor_list, unit_rc, wire_rc_changer)
 
     def calculate(self):
         return self.root.get_capacitor(self.complete_capacitance_list)

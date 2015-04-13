@@ -1,5 +1,7 @@
+from timer import settings
 from timer.algorithm.delay_calculator.capacitance_calculator import CapacitanceCalculator
 from timer.algorithm.delay_calculator.delay_calculator import DelayCalculator
+from timer.algorithm.delay_calculator.rc_adjustment import RCAdjustment
 from timer.coordinate.coordinate import Coordinate
 from timer.node.gate import Gate
 from timer.node.node import Node
@@ -22,20 +24,23 @@ class CalculatorTest(unittest.TestCase):
 
         self._unit_rc = ElectroProperty([1 / Coordinate.scale, 1 / Coordinate.scale])
 
+        settings.RANDOM_RANGE = (1.0, 1.0)
+
     def test_capacitor_gate(self):
-        calculator = CapacitanceCalculator(Gate(Coordinate([1, 1]), ElectroProperty([2, 2])), [2, 3], self._unit_rc)
+        calculator = CapacitanceCalculator(Gate(Coordinate([1, 1]), ElectroProperty([2, 2])), [2, 3], self._unit_rc,
+                                           RCAdjustment())
         self.assertEqual(calculator.calculate(), 2)
 
     def test_capacitor_node(self):
-        calculator = CapacitanceCalculator(self._root_node, [2, 3], self._unit_rc)
+        calculator = CapacitanceCalculator(self._root_node, [2, 3], self._unit_rc, RCAdjustment())
         self.assertEqual(calculator.calculate(), 2 + 3 + 1 * 5 + 1 * 6)
 
     def test_delay_gate(self):
-        calculator = DelayCalculator(self._root_gate, [0, 0], [2, 3], self._unit_rc)
+        calculator = DelayCalculator(self._root_gate, [0, 0], [2, 3], self._unit_rc, RCAdjustment())
         self.assertEqual(calculator.calculate(), 4 * (4 + 5 + 2 + 3) + 5 * (5 / 2.0 + 3))
 
     def test_delay_node(self):
-        calculator = DelayCalculator(self._root_node, [0, 0], [2, 3], self._unit_rc)
+        calculator = DelayCalculator(self._root_node, [0, 0], [2, 3], self._unit_rc, RCAdjustment())
         self.assertAlmostEqual(calculator.calculate(), 36)
 
 

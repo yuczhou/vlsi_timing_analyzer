@@ -1,16 +1,20 @@
 import abc
+from timer.settings import settings
+
+from timer.algorithm.delay_calculator.rc_adjustment import CoordSelector
+
 
 __author__ = 'yuczhou'
 
 
 class Calculator(object):
-
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, root, downstream_capacitor_list, unit_rc):
+    def __init__(self, root, downstream_capacitor_list, unit_rc, wire_rc_changer):
         self._root = root
         self._downstream_capacitance_list = downstream_capacitor_list
         self._unit_rc = unit_rc
+        self._wire_rc_changer = wire_rc_changer
 
     @property
     def downstream_capacitance_list(self):
@@ -26,7 +30,14 @@ class Calculator(object):
                 zip(self.downstream_capacitance_list, map(lambda _: _.c, self._wire_rc()))]
 
     def _wire_rc(self):
-        return [self._unit_rc * self.root.distance_from(child) for child in self.root.neighbors()]
+        return [self._unit_rc * self.root.distance_from(child) * self._wire_rc_adjustment(child) for child in
+                self.root.neighbors()]
+
+    def _wire_rc_adjustment(self, child):
+        if settings.TEST_MODE:
+            return 1
+        return (child.coord.coord[1] * self._wire_rc_changer.get_adjustment(child.coord, CoordSelector.RIGHT) +
+                self.root.coord.coord[0] * self._wire_rc_changer.get_adjustment(self.root.coord, CoordSelector.LEFT))
 
     @abc.abstractmethod
     def calculate(self):

@@ -1,9 +1,9 @@
+from timer.algorithm.delay_calculator.rc_adjustment import RCAdjustment
 from timer.algorithm.dfs import DFS
 from timer.coordinate.coordinate import Coordinate
 from timer.node.buffer import Buffer
 from timer.node.gate import Gate
 from timer.node.node import Node
-from timer.parser.line_parser.unit_rc_parser import UnitRCParser
 from timer.vlsi.buffer_property import BufferProperty
 from timer.vlsi.electro_property import ElectroProperty
 
@@ -22,7 +22,7 @@ class DFSTest(unittest.TestCase):
         self._unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
 
     def test_no_buffer(self):
-        self.assertEqual(DFS(self._root_gate, self._unit_rc).delay()[0], 324.5)
+        self.assertEqual(DFS(self._root_gate, self._unit_rc, RCAdjustment()).delay()[0], 324.5)
 
     def test_simple_no_buffer(self):
         root = Gate(Coordinate([0, 0]), ElectroProperty([10, 0]))
@@ -30,7 +30,7 @@ class DFSTest(unittest.TestCase):
 
         unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
 
-        self.assertEqual(DFS(root, unit_rc).delay()[0], 250)
+        self.assertEqual(DFS(root, unit_rc, RCAdjustment()).delay()[0], 250)
 
     def test_simple_one_buffer(self):
         root = Gate(Coordinate([0, 0]), ElectroProperty([10, 0]))
@@ -39,7 +39,7 @@ class DFSTest(unittest.TestCase):
 
         unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
 
-        self.assertEqual(DFS(root, unit_rc).delay()[0], 350)
+        self.assertEqual(DFS(root, unit_rc, RCAdjustment()).delay()[0], 350)
 
     def test_two_branch_one_buffer(self):
         root = Gate(Coordinate([0, 0]), ElectroProperty([10, 0]))
@@ -50,7 +50,7 @@ class DFSTest(unittest.TestCase):
 
         unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
 
-        self.assertEqual(DFS(root, unit_rc).delay()[0], 662.5)
+        self.assertEqual(DFS(root, unit_rc, RCAdjustment()).delay()[0], 662.5)
 
     def test_complex_case(self):
         root = Gate(Coordinate([0, 0]), ElectroProperty([5, 0]))
@@ -64,7 +64,7 @@ class DFSTest(unittest.TestCase):
 
         unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
 
-        self.assertEqual(DFS(root, unit_rc).delay()[0], 3250)
+        self.assertEqual(DFS(root, unit_rc, RCAdjustment()).delay()[0], 3250)
 
     def test_binary_tree(self):
         driver_0 = Gate(Coordinate([0, 0]), ElectroProperty([1, 0]))
@@ -90,7 +90,7 @@ class DFSTest(unittest.TestCase):
 
         unit_rc = ElectroProperty([1 / Coordinate.scale] * 2)
 
-        self.assertEqual(DFS(driver_0, unit_rc).delay()[0], 667)
+        self.assertEqual(DFS(driver_0, unit_rc, RCAdjustment()).delay()[0], 667)
 
 
 if __name__ == '__main__':
