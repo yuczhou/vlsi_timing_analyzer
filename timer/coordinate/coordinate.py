@@ -24,5 +24,8 @@ class Coordinate(object):
     def __str__(self):
         return str(self.coord)
 
+    def __getitem__(self, item):
+        return self.coord[item]
+
     def distance(self, coordinate):
         return [abs(c1 - c2) * Coordinate.scale for c1, c2 in zip(self.coord, coordinate.coord)]

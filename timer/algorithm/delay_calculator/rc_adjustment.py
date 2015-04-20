@@ -19,11 +19,16 @@ class RCAdjustment(object):
     def _single_dict_str(self, selector):
         return "\n".join([str(key) + " " + str(value) for key, value in self._adjustment[selector].iteritems()])
 
-
-    def get_adjustment(self, coord, selector):
-        if not isinstance(coord, Coord):
+    def set_adjustment(self, key, selector, value):
+        if not isinstance(key, int):
             raise TypeError('invalid type')
-        if not coord.coord[selector] in self._adjustment[selector]:
-            random_range = settings.RANDOM_RANGE
-            self._adjustment[selector][coord.coord[selector]] = random.uniform(random_range[0], random_range[1])
-        return self._adjustment[selector][coord.coord[selector]]
+        if key in self._adjustment[selector]:
+            raise RuntimeError('Key %s already has random value assigned!' % str(key))
+        self._adjustment[selector][key] = value
+
+    def get_adjustment(self, key, selector):
+        if not isinstance(key, int):
+            raise TypeError('invalid type')
+        if key not in self._adjustment[selector]:
+            raise RuntimeError('Key %s has no random value assigned!' % str(key))
+        return self._adjustment[selector][key]

@@ -35,10 +35,11 @@ class Calculator(object):
 
     def _wire_rc_adjustment(self, child):
         if settings.TEST_MODE:
-            return 1
+            return sum(self.root.distance_from(child))
         return sum([random_adjust * actual_length for random_adjust, actual_length in zip(
-            [self._wire_rc_changer.get_adjustment(self.root.coord, CoordSelector.LEFT),
-             self._wire_rc_changer.get_adjustment(child.coord, CoordSelector.RIGHT)], self.root.distance_from(child))])
+            [self._wire_rc_changer.get_adjustment(self.root.coord[CoordSelector.LEFT], CoordSelector.LEFT),
+             self._wire_rc_changer.get_adjustment(child.coord[CoordSelector.RIGHT], CoordSelector.RIGHT)],
+            self.root.distance_from(child))])
 
     @abc.abstractmethod
     def calculate(self):
